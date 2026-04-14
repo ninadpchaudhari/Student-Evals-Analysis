@@ -538,7 +538,7 @@ st.sidebar.caption(f"Data source: {source_label}")
 st.sidebar.caption(f"Inference baseline: {benchmark_label}")
 
 if page == "Overview & Key Findings":
-    st.title("Teaching Evaluation Analysis -- Second-Year Tenure Review")
+    st.title("Teaching Evaluation Analysis: Second-Year Tenure Review")
     st.subheader("Ninad Chaudhari | Department of Computer Science | Siena University")
 
     eligible = 515
@@ -565,12 +565,11 @@ if page == "Overview & Key Findings":
     ].shape[0]
 
     st.write(
-        "Across the core instructor metrics, results remain strong overall: "
-        f"relative to {benchmark_label}, {above_count} items are above benchmark and {below_count} are below benchmark, with {sig_count} of {len(instructor_df)} "
-        "are statistically significant at p < 0.05. "
-        f"{sig_001_count} of those items reach p < 0.001, indicating highly reliable differences rather than random variation. "
-        f"Top-box agreement ranges from {topbox_min:.0f}% to {topbox_max:.0f}%, and {lo_above} "
-        "discipline-relevant learning outcomes also show significant positive deviations."
+        f"Compared with {benchmark_label}, {above_count} core instructor items are above benchmark and "
+        f"{below_count} are below benchmark. {sig_count} of {len(instructor_df)} items are statistically "
+        "significant at p < 0.05, and "
+        f"{sig_001_count} items are below p < 0.001. Top-box agreement ranges from {topbox_min:.0f}% "
+        f"to {topbox_max:.0f}%. {lo_above} learning outcomes also show significant positive deviations."
     )
 
     left, right = st.columns(2)
@@ -770,7 +769,7 @@ elif page == "Learning Outcomes":
     tier2 = lo_tiered[lo_tiered["Tier"] == f"Tier 2 - Significantly Below {benchmark_label}"]
     tier3 = lo_tiered[lo_tiered["Tier"] == "Tier 3 - Not Statistically Significant"]
 
-    st.subheader(f"Tier 1 -- Significantly Above {benchmark_label}")
+    st.subheader(f"Tier 1: Significantly Above {benchmark_label}")
     st.write(
         "These outcomes align directly with disciplinary strengths in computing courses, "
         "including critical/creative thinking, quantitative skills, and scientific method."
@@ -784,7 +783,7 @@ elif page == "Learning Outcomes":
         hide_index=True,
     )
 
-    st.subheader(f"Tier 2 -- Significantly Below {benchmark_label}")
+    st.subheader(f"Tier 2: Significantly Below {benchmark_label}")
     st.write(
         "These outcomes are primarily institution-wide mission outcomes (for example diversity, traditions, "
         "social justice, stewardship) that are less central to most CS offerings. The pattern is typically "
@@ -799,7 +798,7 @@ elif page == "Learning Outcomes":
         hide_index=True,
     )
 
-    st.subheader("Tier 3 -- Not Statistically Significant")
+    st.subheader("Tier 3: Not Statistically Significant")
     st.write(
         "Several outcomes show modest differences but do not clear the p < 0.05 threshold. "
         "With LO sample sizes commonly around N=132-135, statistical power is lower than in the core instructor set."
@@ -894,8 +893,8 @@ elif page == "Learning Outcomes":
 elif page == "Interactive Significance Explorer":
     st.title("Interactive Significance Explorer")
     st.write(
-        "Adjust means, standard deviations, and sample size to see exactly how statistical significance changes. "
-        "This makes the one-sample t-test mechanics visible for both core instructor metrics and learning outcomes."
+        "Adjust means, standard deviations, and sample size to see how significance changes. "
+        "Use this view to compare one-sample t-test behavior across instructor metrics and learning outcomes."
     )
 
     tab_a, tab_b = st.tabs(["Instructor Quality Metrics", "Learning Outcome Metrics"])
@@ -1000,7 +999,7 @@ elif page == "Interactive Significance Explorer":
         if str(lo_row["Tier"]).startswith("Tier 2 - Significantly Below"):
             render_callout(
                 "warning-note",
-                "This outcome sits in the significantly-below tier. For many CS courses, that often reflects curriculum emphasis rather than instructional weakness, especially for broad institution-level outcomes.",
+                "This outcome is in the significantly-below tier. In many CS courses, this can reflect curriculum emphasis more than instructional weakness, especially for broad institution-level outcomes.",
             )
 
     st.markdown("### Side-by-Side Item Comparison")
@@ -1075,7 +1074,7 @@ elif page == "Methodology":
     st.write(
         "The t-statistic scales the observed deviation by its standard error. Larger absolute t-values indicate stronger evidence against the null hypothesis."
     )
-    st.write("Notation matters here: lowercase t is the observed value computed from the course data, while uppercase T in expressions like p = 2 · P(T > |t|) refers to the reference t-distribution used to compute tail probability under the null model.")
+    st.write("Lowercase t is the observed statistic from the course data. Uppercase T in expressions like p = 2 · P(T > |t|) refers to the reference t-distribution used for the probability calculation under the null model.")
 
     st.markdown("### Z-Score vs T-Statistic")
     st.write(
@@ -1083,12 +1082,12 @@ elif page == "Methodology":
     )
     st.latex(r"z = \frac{\bar{X} - \mu_0}{s}")
     st.latex(r"t = \frac{\bar{X} - \mu_0}{s/\sqrt{n}} = z \cdot \sqrt{n}")
-    st.write("Use z to describe how far the course mean is from the benchmark in SD units. Use t for significance testing, because t scales that same deviation by the standard error and therefore reflects sample size. In other words, the reported t-statistic is a realized sample value, and the t-distribution, written with a capital T in the p-value formula, is the probability model we compare that realized value against.")
+    st.write("Use z to describe how far the course mean is from the benchmark in SD units. Use t for significance testing because t scales the same deviation by the standard error and reflects sample size. The reported t-statistic is the observed sample value, and the t-distribution (capital T in the p-value formula) is the reference model used for comparison.")
 
     st.markdown("### What Significance Means (and Does Not Mean)")
     st.write(
-        "Statistical significance indicates that an observed difference is unlikely to be random noise under the null model. "
-        "It does not, by itself, measure pedagogical importance or effect size. Practical interpretation should combine magnitude, "
+        "Statistical significance means an observed difference is unlikely to be random noise under the null model. "
+        "By itself, it does not measure pedagogical importance or effect size. Interpretation should also include magnitude, "
         "response distribution, and curricular context."
     )
 
